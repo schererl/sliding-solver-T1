@@ -4,9 +4,9 @@
 #include "tilepuzzle.h"
 
 Heuristic::Heuristic(const TILE_size &state){
-    init_h = heuristic(state);
     heuristic_count = 0;
     heuristic_acc = 0;
+    init_h = heuristic(state);
 }
 
 int Heuristic::heuristic(const TILE_size &state) {
