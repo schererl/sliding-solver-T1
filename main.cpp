@@ -3,6 +3,7 @@
 #include "bfs.h"
 #include "HeuristicSearch.h"
 #include "iterativeDeepening.h"
+#include "IdAstar.h"
 #include <cmath>
 #include <chrono>
 #include <fstream>
@@ -42,8 +43,9 @@ int main(int argc, char *argv[]){
         auto [state, blank_x, blank_y] = vectorToState(tiles);
         auto start_solver_time = std::chrono::high_resolution_clock::now();
         //heuristic_solver(state, blank_x, blank_y, ASTAR);
-        id_solver(state, blank_x, blank_y);
+        // id_solver(state, blank_x, blank_y);
         //bfs_solver(state, blank_x, blank_y);
+        idAstarSolver(state, blank_x, blank_y);
     }
 
     std::chrono::duration<double> total_elapsed = std::chrono::high_resolution_clock::now() - init_time;

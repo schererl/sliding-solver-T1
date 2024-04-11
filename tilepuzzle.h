@@ -14,7 +14,7 @@
 //#define ROW_COL_SIZE 4
 //#define GOAL_STATE 0xfedcba9876543210
 
-typedef u_int64_t TILE_size; 
+typedef uint64_t TILE_size; 
 
 enum Move { LEFT, RIGHT, UP, DOWN, NONE};
 
