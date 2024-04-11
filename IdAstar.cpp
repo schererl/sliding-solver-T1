@@ -40,8 +40,8 @@ std::pair<int, uint32_t> idAstar(const TILE_size &state, Move last_move, const i
 void idAstarSolver(const TILE_size& initial_state, const int &blank_x, const int &blank_y){
 
     Heuristic h = Heuristic(initial_state);
-    h.heuristic_acc = 0;
-    h.heuristic_count = 0;
+    // h.heuristic_acc = 0;
+    // h.heuristic_count = 0;
 
     std::pair<int, uint32_t> solution;
     uint32_t result;
@@ -59,8 +59,8 @@ void idAstarSolver(const TILE_size& initial_state, const int &blank_x, const int
         }
 
         // conta a "criação" de um novo nodo inicial
-        h.heuristic_acc += h.init_h;
-        h.heuristic_count ++;
+        // h.heuristic_acc += h.init_h;
+        // h.heuristic_count ++;
     }
-    std::cout << expanded_nodes << ',' << f_limit << std::endl;
+    std::cout << expanded_nodes << ',' << f_limit << ',' << h.heuristic_acc/h.heuristic_count << std::endl;
 }
