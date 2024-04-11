@@ -3,7 +3,7 @@ Sliding Puzzle Solver - AI Advanced course UFRGS 2024/1
 
 #TODO
 
-- [ x ] IDA*
+- [x] IDA*
 - [ ] Check Iterative Deepening
 - [ ] Fix average heuristic A*
 - [ ] Fix average heuristic GBFS
