@@ -2,6 +2,7 @@
 //#include "bfs.h"
 #include "HeuristicSearch.h"
 #include <cmath>
+#include <sstream>
 
 int ROW_COL_SIZE;
 uint64_t GOAL_STATE;
@@ -123,4 +124,50 @@ std::vector<std::tuple<Move, TILE_size, int, int>> successors(const TILE_size &s
 
 int isGoal(const TILE_size &state){
     return state == GOAL_STATE;
+}
+
+Method search_method(std::string method_name){
+    // switch does not work with std::string (?)
+    if (method_name == "-bfs") {
+        return BFS_M;
+    } else if (method_name == "-idfs") {
+        return IDFS_M;
+    } else if (method_name == "-astar") {
+        return ASTAR_M;
+    } else if (method_name == "-idastar") {
+        return IDASTAR_M;
+    } else if (method_name == "-gbfs") {
+        return GBFS_M;
+    }
+    
+    return INVALID_M;
+    
+}
+
+Method read_arguments(std::vector<int>& puzzle, int argc, char* argv[]){
+    
+    std::string method_name = argv[1]; 
+    Method method = search_method(method_name);
+
+    int count = 0;
+    std::string s;
+    for (int i = 2; i < argc; i++) {
+        count++;
+        s = argv[i];
+        std::stringstream ss(s);
+        std::string num;
+
+        while (ss >> num) {
+            if(num.find(',') != -1){
+                count = 0;
+            }
+            puzzle.push_back(stoi(num));
+            
+        }
+    }
+
+    configurePuzzle(count);
+
+    return method;
+
 }

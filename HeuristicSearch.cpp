@@ -6,33 +6,13 @@
 #include <chrono>
 #include <stack>
 
+#define VERBOSE 0
+
 static size_t solved_count = 0;
 static size_t problems_count = 0;
-
-
-
-
-// bool Node::operator>(const Node& other) const {
-//     if (g_value + h_value == other.g_value + other.h_value) {
-//         if (h_value == other.h_value) {
-//             return order_count < other.order_count; // LIFO for same f and h values
-//         }
-//         return h_value > other.h_value; // Lower h value first
-//     }
-//     return g_value + h_value > other.g_value + other.h_value; // Lower f value first
-
-//     if (h_value == other.h_value) {
-//         if(g_value == other.g_value){
-//             return order_count < other.order_count; // LIFO for same f and h values
-//         }
-//         return g_value < other.g_value;
-//     }
-//     return h_value > other.h_value; // Lower h value first
-// }
     
 
 void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, AlgorithmMode mode) {
-    std::cout << "\nSTART SOLVING:" << std::endl;
     using namespace std::chrono;
     duration<double> time_successors(0), time_visited(0), time_heuristic(0), time_pushing(0), time_popping(0);
     auto overall_start = high_resolution_clock::now();
@@ -126,37 +106,39 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
     }
 
     auto total_solving_time = duration_cast<duration<double>>(high_resolution_clock::now() - overall_start);
-    
-    // profilling stuff
-    std::cout << "Total solving time " << total_solving_time.count()  << " seconds\n";
-    std::cout << "Total time for computing successors: " << time_successors.count() << " seconds\n";
-    std::cout << "Total time for checking visited states: " << time_visited.count() << " seconds\n";
-    std::cout << "Total time for computing heuristic: " << time_heuristic.count() << " seconds\n";
-    std::cout << "Total time for inserting into open: " << time_pushing.count() << " seconds\n";
-    std::cout << "Total time for removing from open: " << time_popping.count() << " seconds\n";
-    PrintMemoryUsage();
-    // Print final status
-    if (solved) {
-        std::cout << "H-INIT: " << std::to_string(init_h) << std::endl;
-        std::cout << "H-AVG: " << h.getAvgH() << std::endl;
-        std::cout << "Expanded nodes: " << std::to_string(expanded_nodes) << std::endl;
-        std::cout << "Path lenght: "  << std::to_string(goal_node->g_value) << std::endl;
-        delete goal_node;
-        std::cout << "Solved\n";
-    } else if (duration_cast<duration<double>>(high_resolution_clock::now() - overall_start).count() > 30) {
-        std::cout << "Unsolved (Out of Time)\n";
-    } else if (IsMemoryLimitExceeded()){
-         std::cout << "Unsolved (Out of Memory)\n";
+    if(VERBOSE){
+        // profilling stuff
+        std::cout << "Total solving time " << total_solving_time.count()  << " seconds\n";
+        std::cout << "Total time for computing successors: " << time_successors.count() << " seconds\n";
+        std::cout << "Total time for checking visited states: " << time_visited.count() << " seconds\n";
+        std::cout << "Total time for computing heuristic: " << time_heuristic.count() << " seconds\n";
+        std::cout << "Total time for inserting into open: " << time_pushing.count() << " seconds\n";
+        std::cout << "Total time for removing from open: " << time_popping.count() << " seconds\n";
+        PrintMemoryUsage();
+        // Print final status
+        if (solved) {
+            std::cout << "H-INIT: " << std::to_string(init_h) << std::endl;
+            std::cout << "H-AVG: " << h.getAvgH() << std::endl;
+            std::cout << "Expanded nodes: " << std::to_string(expanded_nodes) << std::endl;
+            std::cout << "Path lenght: "  << std::to_string(goal_node->g_value) << std::endl;
+            delete goal_node;
+            std::cout << "Solved\n";
+        } else if (duration_cast<duration<double>>(high_resolution_clock::now() - overall_start).count() > 30) {
+            std::cout << "Unsolved (Out of Time)\n";
+        } else if (IsMemoryLimitExceeded()){
+            std::cout << "Unsolved (Out of Memory)\n";
+        }
+        else {
+            std::cout << "Unsolved\n";
+        }
+        std::cout << "Total puzzles solved: " << solved_count << "/" << problems_count << std::endl;
+    }else{
+        std::cout << expanded_nodes << ',' << goal_node->g_value << ',' << total_solving_time.count() << ',' << h.heuristic_acc/h.heuristic_count << ',' << init_h << std::endl;
     }
-    else {
-        std::cout << "Unsolved\n";
-    }
-    std::cout << "Total puzzles solved: " << solved_count << "/" << problems_count << std::endl;
     while (!open.empty()) {
         delete open.top();
         open.pop();
     }
-    
 }
 
 

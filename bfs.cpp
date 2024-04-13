@@ -1,8 +1,10 @@
 #include "bfs.h"
 #include "tilepuzzle.h"
 
-
+#include <chrono>
+using namespace std::chrono;
 void bfs_solver(const TILE_size& initial_state, const int &blank_x, const int &blank_y) {
+    auto overall_start = high_resolution_clock::now();
     Node *initial_node = new Node(initial_state, Move::NONE, 0, 0, 0, 0, blank_x, blank_y);
     size_t expanded_nodes = 0;
     
@@ -26,7 +28,9 @@ void bfs_solver(const TILE_size& initial_state, const int &blank_x, const int &b
             if (visited.find(next_state) != visited.end()) continue;
         
             if (isGoal(next_state)) {
-                std::cout << "Goal reached after " << current->moves_count+1 << " moves.\nNodes expanded " << expanded_nodes << std::endl;
+                //std::cout << "Goal reached after " << current->moves_count+1 << " moves.\nNodes expanded " << expanded_nodes << std::endl;
+                auto total_solving_time = duration_cast<duration<double>>(high_resolution_clock::now() - overall_start);
+                std::cout << expanded_nodes << ',' << current->moves_count+1 << ',' << total_solving_time.count() <<',' << 0 << ',' << 0 << std::endl;
                 while (!open.empty()) {
                     delete open.front();
                     open.pop();
@@ -39,6 +43,9 @@ void bfs_solver(const TILE_size& initial_state, const int &blank_x, const int &b
             visited.insert(next_state);
         }
         delete current;
-    } 
+    }
+    
+
+    
 
 }

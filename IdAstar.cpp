@@ -1,5 +1,8 @@
 #include "IdAstar.h"
 #include "Heuristic.h"
+#include <chrono>
+
+using namespace std::chrono;
 
 #define FAIL_VALUE -1
 
@@ -26,7 +29,7 @@ std::pair<int, uint32_t> idAstar(const TILE_size &state, Move last_move, const i
         std::pair<int, uint32_t> result = idAstar(next_state, m, next_bx, next_by, f_limit, depth+1, expanded_nodes, heuristic);
         
         if(result.second != FAIL_VALUE){
-            return {f, depth};
+            return {f, result.second};
         }
         
         next_limit = std::min(next_limit, result.first);
@@ -38,10 +41,9 @@ std::pair<int, uint32_t> idAstar(const TILE_size &state, Move last_move, const i
 
 
 void idAstarSolver(const TILE_size& initial_state, const int &blank_x, const int &blank_y){
+    auto overall_start = high_resolution_clock::now();
 
     Heuristic h = Heuristic(initial_state);
-    // h.heuristic_acc = 0;
-    // h.heuristic_count = 0;
 
     std::pair<int, uint32_t> solution;
     uint32_t result;
@@ -57,10 +59,8 @@ void idAstarSolver(const TILE_size& initial_state, const int &blank_x, const int
         if(result != FAIL_VALUE){
             break;
         }
-
-        // conta a "criação" de um novo nodo inicial
-        // h.heuristic_acc += h.init_h;
-        // h.heuristic_count ++;
     }
-    std::cout << expanded_nodes << ',' << f_limit << ',' << h.heuristic_acc/h.heuristic_count << std::endl;
+    auto total_solving_time = duration_cast<duration<double>>(high_resolution_clock::now() - overall_start);
+
+    std::cout << expanded_nodes << ',' << solution.second << ',' << total_solving_time.count() << ',' << h.heuristic_acc/h.heuristic_count << ',' << h.init_h << std::endl;
 }

@@ -51,5 +51,9 @@ bool opposite(Move parentMove, Move nextMove);
 std::vector<std::tuple<Move, TILE_size, int, int>> successors(const TILE_size &state, int blank_x, int blank_y);
 
 int isGoal(const TILE_size &state);
+
+Method read_arguments(std::vector<int>& puzzle, int argc, char* argv[]);
+
+Method search_method(std::string method_name);
 #endif
 
