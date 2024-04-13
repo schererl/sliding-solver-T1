@@ -62,5 +62,5 @@ void idAstarSolver(const TILE_size& initial_state, const int &blank_x, const int
         // h.heuristic_acc += h.init_h;
         // h.heuristic_count ++;
     }
-    std::cout << expanded_nodes << ',' << f_limit << ',' << h.heuristic_acc/h.heuristic_count << std::endl;
+    std::cout << expanded_nodes << ',' << solution.second << ',' << f_limit << ',' << h.heuristic_acc/h.heuristic_count << ',' << h.init_h << std::endl;
 }
