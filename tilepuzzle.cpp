@@ -17,6 +17,10 @@ void configurePuzzle(int size) {
     }
 }
 
+int PuzzleSize(){
+    return ROW_COL_SIZE*ROW_COL_SIZE;
+}
+
 std::string MoveToString(Move m) {
     switch (m) {
         case LEFT: return "LEFT";

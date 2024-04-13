@@ -14,7 +14,9 @@ extern uint64_t GOAL_STATE;
 void configurePuzzle(int size);
 
 typedef uint64_t TILE_size; 
+typedef uint8_t method_t;
 
+enum Method {BFS_M, IDFS_M, ASTAR_M, GBFS_M, IDASTAR_M, INVALID_M};
 enum Move { LEFT, RIGHT, UP, DOWN, NONE};
 
 class Node {
@@ -35,6 +37,7 @@ public:
 };
 
 
+int PuzzleSize();
 std::string MoveToString(Move m);
 
 std::string StateToString(const TILE_size &state);
