@@ -6,9 +6,6 @@
 #include <chrono>
 #include <stack>
 
-#ifdef VERBOSE
-#endif
-
 static size_t solved_count = 0;
 static size_t problems_count = 0;
     

@@ -5,7 +5,7 @@
 
 class Heuristic {
 public:
-    float heuristic_acc;
+    double heuristic_acc;
     int heuristic_count;
     int init_h;
     Heuristic(const TILE_size &state);
