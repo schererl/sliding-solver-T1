@@ -26,7 +26,7 @@ std::pair<int, uint32_t> idAstar(const TILE_size &state, Move last_move, const i
         std::pair<int, uint32_t> result = idAstar(next_state, m, next_bx, next_by, f_limit, depth+1, expanded_nodes, heuristic);
         
         if(result.second != FAIL_VALUE){
-            return {f, depth};
+            return {f, result.second};
         }
         
         next_limit = std::min(next_limit, result.first);
@@ -62,5 +62,5 @@ void idAstarSolver(const TILE_size& initial_state, const int &blank_x, const int
         // h.heuristic_acc += h.init_h;
         // h.heuristic_count ++;
     }
-    std::cout << expanded_nodes << ',' << solution.second << ',' << f_limit << ',' << h.heuristic_acc/h.heuristic_count << ',' << h.init_h << std::endl;
+    std::cout << expanded_nodes << ',' << solution.second << ',' << h.heuristic_acc/h.heuristic_count << ',' << h.init_h << std::endl;
 }
