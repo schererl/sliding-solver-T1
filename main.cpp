@@ -39,13 +39,14 @@ int main(int argc, char *argv[]){
         {
             tiles.push_back(tile);
         }
+        configurePuzzle(tiles.size());
 
         auto [state, blank_x, blank_y] = vectorToState(tiles);
         auto start_solver_time = std::chrono::high_resolution_clock::now();
-        //heuristic_solver(state, blank_x, blank_y, ASTAR);
+        heuristic_solver(state, blank_x, blank_y, ASTAR);
         // id_solver(state, blank_x, blank_y);
         //bfs_solver(state, blank_x, blank_y);
-        idAstarSolver(state, blank_x, blank_y);
+        //idAstarSolver(state, blank_x, blank_y);
     }
 
     std::chrono::duration<double> total_elapsed = std::chrono::high_resolution_clock::now() - init_time;

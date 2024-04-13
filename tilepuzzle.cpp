@@ -3,6 +3,20 @@
 #include "HeuristicSearch.h"
 #include <cmath>
 
+int ROW_COL_SIZE;
+uint64_t GOAL_STATE;
+void configurePuzzle(int size) {
+    if (size == 16) {
+        ROW_COL_SIZE = 4;
+        GOAL_STATE = 0xFEDCBA9876543210ULL;
+    } else if (size == 9) {
+        ROW_COL_SIZE = 3;
+        GOAL_STATE = 0x876543210ULL;
+    } else {
+        std::cerr << "Unsupported puzzle size" << std::endl;
+    }
+}
+
 std::string MoveToString(Move m) {
     switch (m) {
         case LEFT: return "LEFT";

@@ -8,11 +8,10 @@
 #include <string>
 #define TILE_BIT_SIZE 4
 
-#define ROW_COL_SIZE 3
-#define GOAL_STATE 0x876543210
+extern int ROW_COL_SIZE;
+extern uint64_t GOAL_STATE;
 
-//#define ROW_COL_SIZE 4
-//#define GOAL_STATE 0xfedcba9876543210
+void configurePuzzle(int size);
 
 typedef uint64_t TILE_size; 
 
