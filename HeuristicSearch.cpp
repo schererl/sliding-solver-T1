@@ -6,7 +6,8 @@
 #include <chrono>
 #include <stack>
 
-#define VERBOSE 0
+#ifdef VERBOSE
+#endif
 
 static size_t solved_count = 0;
 static size_t problems_count = 0;
@@ -106,7 +107,8 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
     }
 
     auto total_solving_time = duration_cast<duration<double>>(high_resolution_clock::now() - overall_start);
-    if(VERBOSE){
+
+#ifdef VERBOSE
         // profilling stuff
         std::cout << "Total solving time " << total_solving_time.count()  << " seconds\n";
         std::cout << "Total time for computing successors: " << time_successors.count() << " seconds\n";
@@ -132,9 +134,12 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
             std::cout << "Unsolved\n";
         }
         std::cout << "Total puzzles solved: " << solved_count << "/" << problems_count << std::endl;
-    }else{
+#endif
+
+#ifndef VERBOSE
         std::cout << expanded_nodes << ',' << goal_node->g_value << ',' << total_solving_time.count() << ',' << h.heuristic_acc/h.heuristic_count << ',' << init_h << std::endl;
-    }
+#endif
+
     while (!open.empty()) {
         delete open.top();
         open.pop();
