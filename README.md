@@ -9,6 +9,6 @@ Sliding Puzzle Solver - AI Advanced course UFRGS 2024/1
 - [X] Fix average heuristic GBFS
 - [ ] Template A*/GBFS heap's selection
 - [x] Detect 8/15 puzzle and modify variables (tilepuzzle.cpp)
-- [ ] Parse flags (-astar -bfs -ids -idastar)
-- [ ] Define a 'verbose' flag to receive time updates for the A* algorithm.
+- [x] Parse flags (-astar -bfs -ids -idastar)
+- [x] Define a 'verbose' flag to receive time updates for the A* algorithm.
 - [x] Adjust outputs as described into the assignment
