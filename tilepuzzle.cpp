@@ -144,30 +144,55 @@ Method search_method(std::string method_name){
     
 }
 
-Method read_arguments(std::vector<int>& puzzle, int argc, char* argv[]){
-    
+Method read_arguments(std::vector<std::vector<int>>& puzzles, int argc, char* argv[]) {
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <search-method> [puzzle configurations or redirected file input]" << std::endl;
+        return INVALID_M;
+    }
+
     std::string method_name = argv[1]; 
     Method method = search_method(method_name);
 
-    int count = 0;
-    std::string s;
-    for (int i = 2; i < argc; i++) {
-        count++;
-        s = argv[i];
-        std::stringstream ss(s);
-        std::string num;
-
-        while (ss >> num) {
-            if(num.find(',') != -1){
-                count = 0;
+    if (argc == 2) {
+        // Assuming input might be coming from std::cin (e.g., redirected from a file)
+        std::string line;
+        while (std::getline(std::cin, line)) {
+            std::vector<int> puzzle;
+            std::stringstream ss(line);
+            std::string token;
+            while (getline(ss, token, ',')) {
+                std::stringstream tokenStream(token);
+                int num;
+                while (tokenStream >> num) {
+                    puzzle.push_back(num);
+                }
             }
-            puzzle.push_back(stoi(num));
+            if (!puzzle.empty()) {
+                puzzles.push_back(puzzle);
+            }
+        }
+    } else {
+        // Handle command-line inputs for puzzles
+        puzzles.emplace_back();
+        int current_puzzle = 0;
+        for (int i = 2; i < argc; i++) {
+            std::string s = argv[i];
+            std::stringstream ss(s);
+            std::string token;
             
+            while (getline(ss, token, ',')) {
+                std::stringstream tokenStream(token);
+                int num;
+                while (tokenStream >> num) {
+                    puzzles[current_puzzle].push_back(num);
+                }
+                if (ss.peek() == ',') {
+                    puzzles.emplace_back();
+                    current_puzzle++;
+                }
+            }
         }
     }
-
-    configurePuzzle(count);
-
     return method;
-
 }
+

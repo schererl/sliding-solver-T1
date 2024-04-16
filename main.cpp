@@ -11,18 +11,17 @@
 
 
 int main(int argc, char *argv[]){
-    std::vector<int> puzzle;
+    std::vector<std::vector<int>> puzzles;
 
     // vai pegar todos os números do argumento e por no vetor puzzle
-    Method search_method = read_arguments(puzzle, argc, argv);
+    Method search_method = read_arguments(puzzles, argc, argv);
 
     
     auto init_time = std::chrono::high_resolution_clock::now();
-    int offset = 0;
-    while(offset < puzzle.size()){
-        std::vector<int> tiles(puzzle.begin()+offset, puzzle.begin()+offset+PuzzleSize());
-
-        auto [state, blank_x, blank_y] = vectorToState(tiles);
+    
+    for(auto &puzzle:puzzles){
+        configurePuzzle(puzzle.size());
+        auto [state, blank_x, blank_y] = vectorToState(puzzle);
         auto start_solver_time = std::chrono::high_resolution_clock::now();
         switch (search_method)
         {
@@ -43,7 +42,6 @@ int main(int argc, char *argv[]){
                 break;
         }
 
-        offset += PuzzleSize();
     }
     std::chrono::duration<double> total_elapsed = std::chrono::high_resolution_clock::now() - init_time;
     std::cout << "Total time taken for all instances: "
