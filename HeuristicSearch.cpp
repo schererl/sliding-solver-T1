@@ -89,8 +89,8 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
                 order_count += 1;
 
                 auto start_heuristic = high_resolution_clock::now();
-                //int h_value = h.optimized_heuristic(next_state, m, current->h_value, next_bx, next_by);
-                int h_value = h.heuristic(next_state);
+                int h_value = h.optimized_heuristic(next_state, m, current->h_value, next_bx, next_by);
+                //int h_value = h.heuristic(next_state);
                 time_heuristic += duration_cast<duration<double>>(high_resolution_clock::now() - start_heuristic);
 
                 Node* next_node = new Node(next_state, m, current->moves_count + 1, current->g_value + 1, h_value, order_count + 1, next_bx, next_by);
