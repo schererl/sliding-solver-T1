@@ -4,7 +4,7 @@ CXXFLAGS = -O3 -std=c++17
 DEBUG_FLAGS=-DVERBOSE
 # Source files and the executable name
 SOURCES = main.cpp bfs.cpp IdAstar.cpp iterativeDeepening.cpp HeuristicSearch.cpp Heuristic.cpp Memcontrol.cpp tilepuzzle.cpp
-TARGET = run
+TARGET = main
 
 
 # Default target
