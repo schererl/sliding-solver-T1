@@ -204,8 +204,10 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
 #endif
 
     while (!open.empty()) {
-        delete open.top();
+        Node *popped = open.top();
         open.pop();
+        delete popped;
+        popped = nullptr;
     }
 }
 
