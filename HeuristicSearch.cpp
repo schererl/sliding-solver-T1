@@ -6,8 +6,73 @@
 #include <chrono>
 #include <stack>
 
+#define MAX_F 120
+#define MAX_H 60
+
 static size_t solved_count = 0;
 static size_t problems_count = 0;
+
+typedef struct{
+    std::stack<Node*> bucket[MAX_F*MAX_H];
+    std::pair<int, int> min_node = {MAX_F, MAX_H};
+    int count_elements = 0;
+
+    void push(Node* node){
+        int f = node->h_value + node->g_value;
+        int h = node->h_value;
+
+        if(f < min_node.first){
+            min_node = {f, h};
+        } else if (f == min_node.first){
+            if(h < min_node.second){
+                min_node = {f, h};
+            }
+        }
+        
+        bucket[f*MAX_H + h].push(node);        
+        count_elements++;
+    };
+
+    void pop(){
+        int index_min = min_node.first*MAX_H + min_node.second;
+
+        if (!bucket[index_min].empty()) {
+            bucket[index_min].pop();
+            count_elements--;
+            
+            while(bucket[index_min].empty() && (index_min < MAX_F*MAX_H)){
+                index_min++;
+            }
+
+            min_node.first = index_min / MAX_H;
+            min_node.second = index_min % MAX_H;           
+
+        } else {
+            std::cout << "pop an empty stack" << std::endl;
+            // exit(-1);
+        }
+    };
+
+    Node * top(){
+        Node * node;
+        int index_min = min_node.first*MAX_H + min_node.second;
+
+        if(!bucket[index_min].empty())
+            return bucket[index_min].top();
+            
+        return NULL;
+    };
+
+    bool empty(){
+        if(count_elements > 0){
+            return false;
+        } 
+
+        return true;
+    };
+
+} bucket_t;
+
     
 
 void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, AlgorithmMode mode) {
@@ -39,7 +104,8 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
         }
     };
 
-    std::priority_queue<Node*, std::vector<Node*>, decltype(cmp)> open(cmp);
+    bucket_t open;
+    // std::priority_queue<Node*, std::vector<Node*>, decltype(cmp)> open(cmp);
     std::unordered_set<TILE_size> visited;
     
     problems_count+=1;
