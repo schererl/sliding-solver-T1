@@ -5,6 +5,7 @@
 #include <functional>
 #include <chrono>
 #include <stack>
+#include <set>
 
 #define MAX_F 120
 #define MAX_H 60
@@ -14,6 +15,7 @@ static size_t problems_count = 0;
 
 typedef struct{
     std::stack<Node*> bucket[MAX_F*MAX_H];
+    std::set<int> set_index;
     std::pair<int, int> min_node = {MAX_F, MAX_H};
     int count_elements = 0;
 
@@ -28,8 +30,10 @@ typedef struct{
                 min_node = {f, h};
             }
         }
-        
-        bucket[f*MAX_H + h].push(node);        
+
+        bucket[f*MAX_H + h].push(node);
+
+        set_index.insert(f*MAX_H + h);
         count_elements++;
     };
 
@@ -40,12 +44,19 @@ typedef struct{
             bucket[index_min].pop();
             count_elements--;
             
-            while(bucket[index_min].empty() && (index_min < MAX_F*MAX_H)){
-                index_min++;
-            }
+            if(bucket[index_min].empty()){
+                set_index.erase(index_min);
 
-            min_node.first = index_min / MAX_H;
-            min_node.second = index_min % MAX_H;           
+                if(set_index.size()>0){
+                    index_min = *(set_index.begin());
+                    min_node.first = index_min / MAX_H;
+                    min_node.second = index_min % MAX_H;
+                } else {
+                    min_node.first = MAX_F;
+                    min_node.second = MAX_H;
+                }
+            }
+           
 
         } else {
             std::cout << "pop an empty stack" << std::endl;
