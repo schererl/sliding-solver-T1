@@ -16,6 +16,12 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
     duration<double> time_successors(0), time_visited(0), time_heuristic(0), time_pushing(0), time_popping(0);
     auto overall_start = high_resolution_clock::now();
     //auto cmp = [](Node* a, Node* b) { return *a > *b; };
+
+#ifdef BUCKET
+    bucket_t open;
+#endif
+
+#ifndef BUCKET
     auto cmp = [mode](Node* a, Node* b) -> bool {
     switch(mode) {
         case GBFS:
@@ -40,8 +46,9 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
         }
     };
 
-    bucket_t open;
-    // std::priority_queue<Node*, std::vector<Node*>, decltype(cmp)> open(cmp);
+    std::priority_queue<Node*, std::vector<Node*>, decltype(cmp)> open(cmp);
+#endif
+
     std::unordered_set<TILE_size> visited;
     
     problems_count+=1;

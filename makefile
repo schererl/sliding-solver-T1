@@ -15,6 +15,9 @@ all: $(TARGET)
 verbose: CXXFLAGS += $(DEBUG_FLAGS)
 verbose: clean all
 
+# Run with bucket
+bucket: CXXFLAGS += -DBUCKET
+bucket: clean all
 
 # Rule to link the program
 $(TARGET): $(SOURCES)
