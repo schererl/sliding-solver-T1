@@ -62,6 +62,7 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
     bool solved = false;    
     open.push(initial_node); 
     Node* goal_node;
+    std::string status="";
     while (!open.empty()) {
         auto start_popping = high_resolution_clock::now();
         Node* current = open.top();
@@ -77,14 +78,17 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
                 solved = true;
                 solved_count++;
                 goal_node=current;
+                status="solved";
                 break;
             }
 
             if (duration_cast<duration<double>>(high_resolution_clock::now() - overall_start).count() > 30) {
+                status="timeout";
                 break;
             }
 
             if (IsMemoryLimitExceeded()) {
+                status="memout";
                 break;
             }
 
@@ -143,7 +147,7 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
 #endif
 
 #ifndef VERBOSE
-        std::cout << expanded_nodes << ',' << goal_node->g_value << ',' << total_solving_time.count() << ',' << h.heuristic_acc/h.heuristic_count << ',' << init_h << std::endl;
+        std::cout <<  expanded_nodes << ',' << goal_node->g_value << ',' << total_solving_time.count() << ',' << h.heuristic_acc/h.heuristic_count << ',' << init_h  << ',' << status<< std::endl;
 #endif
     // int max_f = 0;
     while (!open.empty()) {

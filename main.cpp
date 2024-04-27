@@ -23,6 +23,7 @@ int main(int argc, char *argv[]){
         configurePuzzle(puzzle.size());
         auto [state, blank_x, blank_y] = vectorToState(puzzle);
         auto start_solver_time = std::chrono::high_resolution_clock::now();
+        
         switch (search_method)
         {
             case ASTAR_M:        
