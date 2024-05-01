@@ -60,7 +60,10 @@ void idAstarSolver(const TILE_size& initial_state, const int &blank_x, const int
             break;
         }
     }
-    auto total_solving_time = duration_cast<duration<double>>(high_resolution_clock::now() - overall_start);
-
-    std::cout << expanded_nodes << ',' << solution.second << ',' << total_solving_time.count() << ',' << h.heuristic_acc/h.heuristic_count << ',' << h.init_h << std::endl;
+    auto total_solving_time = duration_cast<duration<double>>(high_resolution_clock::now() - overall_start).count();
+    if(total_solving_time < 30){
+        std::cout << expanded_nodes << ',' << solution.second << ',' << total_solving_time << ',' << h.heuristic_acc/h.heuristic_count << ',' << h.init_h << std::endl;
+    } else {
+        std::cout << "-,-,-,-,-" << std::endl;
+    }
 }

@@ -147,7 +147,12 @@ void heuristic_solver(const TILE_size& initial_state, int blank_x, int blank_y, 
 #endif
 
 #ifndef VERBOSE
-        std::cout <<  expanded_nodes << ',' << goal_node->g_value << ',' << total_solving_time.count() << ',' << h.heuristic_acc/h.heuristic_count << ',' << init_h  << ',' << status<< std::endl;
+    auto solving_time = total_solving_time.count();
+    if(solving_time < 30){
+        std::cout <<  expanded_nodes << ',' << goal_node->g_value << ',' << total_solving_time.count() << ',' << h.heuristic_acc/h.heuristic_count << ',' << init_h  << std::endl;
+    } else {
+        std::cout << "-,-,-,-,-" << std::endl;
+    }
 #endif
     // int max_f = 0;
     while (!open.empty()) {

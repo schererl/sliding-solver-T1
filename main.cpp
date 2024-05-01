@@ -44,9 +44,9 @@ int main(int argc, char *argv[]){
         }
 
     }
-    std::chrono::duration<double> total_elapsed = std::chrono::high_resolution_clock::now() - init_time;
-    std::cout << "Total time taken for all instances: "
-              << total_elapsed.count() << " seconds." << std::endl;
+    // std::chrono::duration<double> total_elapsed = std::chrono::high_resolution_clock::now() - init_time;
+    // std::cout << "Total time taken for all instances: "
+            //   << total_elapsed.count() << " seconds." << std::endl;
 
     // file.close();
     return 0;

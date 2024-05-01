@@ -1,5 +1,6 @@
 #include "bfs.h"
 #include "tilepuzzle.h"
+#include "Heuristic.h"
 
 #include <chrono>
 using namespace std::chrono;
@@ -29,8 +30,12 @@ void bfs_solver(const TILE_size& initial_state, const int &blank_x, const int &b
         
             if (isGoal(next_state)) {
                 //std::cout << "Goal reached after " << current->moves_count+1 << " moves.\nNodes expanded " << expanded_nodes << std::endl;
-                auto total_solving_time = duration_cast<duration<double>>(high_resolution_clock::now() - overall_start);
-                std::cout << expanded_nodes << ',' << current->moves_count+1 << ',' << total_solving_time.count() <<',' << 0 << ',' << 0 << std::endl;
+                auto total_solving_time = duration_cast<duration<double>>(high_resolution_clock::now() - overall_start).count();
+                if(total_solving_time < 30){
+                    std::cout << expanded_nodes << ',' << current->moves_count+1 << ',' << total_solving_time <<',' << 0 << ',' << Heuristic(initial_state).init_h << std::endl;
+                } else {
+                    std::cout << "-,-,-,-,-" << std::endl;
+                }
                 while (!open.empty()) {
                     delete open.front();
                     open.pop();
