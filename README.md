@@ -1,14 +1,22 @@
 # sliding-solver-T1
 Sliding Puzzle Solver - AI Advanced course UFRGS 2024/1
 
-# TODO
+Authors:
+Leonardo Dorneles 
+Victor Scherer
 
-- [x] IDA*
-- [x] Check Iterative Deepening
-- [X] Fix average heuristic A*
-- [X] Fix average heuristic GBFS
-- [ ] Template A*/GBFS heap's selection
-- [x] Detect 8/15 puzzle and modify variables (tilepuzzle.cpp)
-- [x] Parse flags (-astar -bfs -ids -idastar)
-- [x] Define a 'verbose' flag to receive time updates for the A* algorithm.
-- [x] Adjust outputs as described into the assignment
+## Compiling
+To compile the code with the standard configurations, just make it:  
+```
+make
+```
+To use the bucket data structure in the A*
+```
+make bucket
+```
+## Running with the instances
+The available solvers are `-astar`, `-bfs`, `-gbfs`, `-idastar`, `-idfs`.
+To run A* solver with input files, for instance:   
+```
+./main -astar < 15puzzle_example.txt 
+```
