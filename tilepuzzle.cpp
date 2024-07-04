@@ -173,25 +173,23 @@ Method read_arguments(std::vector<std::vector<int>>& puzzles, int argc, char* ar
         }
     } else {
         // Handle command-line inputs for puzzles
-        puzzles.emplace_back();
-        int current_puzzle = 0;
+        std::vector<int> puzzle;
+        std::string s;
         for (int i = 2; i < argc; i++) {
-            std::string s = argv[i];
+            s = argv[i];
             std::stringstream ss(s);
-            std::string token;
-            
-            while (getline(ss, token, ',')) {
-                std::stringstream tokenStream(token);
-                int num;
-                while (tokenStream >> num) {
-                    puzzles[current_puzzle].push_back(num);
-                }
-                if (ss.peek() == ',') {
-                    puzzles.emplace_back();
-                    current_puzzle++;
-                }
+            std::string num;
+
+            while (ss >> num) {
+                puzzle.push_back(stoi(num));  
+                if(num.find(',') != -1){
+                    puzzles.push_back(puzzle);
+                    puzzle.clear();
+                } 
             }
         }
+        puzzles.push_back(puzzle);
+        puzzle.clear();
     }
     return method;
 }
